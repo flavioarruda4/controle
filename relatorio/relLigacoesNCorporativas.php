@@ -26,44 +26,58 @@
         $design     = $_SESSION['design'];
         $privilegio = $_SESSION['privilegio']; 
     ?> 
-    <title>Controle de Telefonia</title>
     <?php include ("../js/header.php");?>
+    <title>Controle de Telefonia</title>
+    <!-- Script para que seja exibido um calendário nos campos que estiverem setadas para que recebam class=dateTxt -->
+    <script>
+        $( function() {
+            $(function(){$('.dateTxt').datepicker({ dateFormat: 'yy-mm-dd' }); }); 
+        } );
+
+    </script>    
+
 </head>
 
 <body>
     <h1 id="tituloPop">Controle de Telefonia</h1>
-	<?php
-        $consulta =" Select cod_noticia,data_noticia,
-                            convert(noticia using utf8)as noticia, convert(descricao using utf8)as descricao
-                     From noticia 
-                     Order by data_noticia desc";
-        $resultado = mysql_query($consulta) or die("Falha na execucao da consulta");            
-        $i = 1;
-        
-        echo "<table align ='center' width=700 border = 1>";
-        echo "  <tr>";
-        echo "     <th>Id</th>";
-        echo "     <th>Dta Noticia</th>";
-        echo "     <th>Noticia</th>";
-        echo "     <th>Detalhamento</th>";
-        echo "  </tr>";
-        while ($linha = mysql_fetch_assoc($resultado))
-                  {
-                   $cod_noticia  = $linha["cod_noticia"];
-                   $data_noticia = $linha["data_noticia"];
-                   $noticia      = $linha["noticia"];
-                   $descricao    = $linha["descricao"];
-                   echo( "<tr>
-                             <td width = 6 align ='center'>$cod_noticia</td>
-                             <td width = 8>$data_noticia</td>
-                             <td width = 45>$noticia</td>
-                             <td width = 60>$descricao</td>
-                          </tr>");
-                  $i++;
-              }        
-       echo "<img src='../imagens/logocmb.png'>"; 
-    ?> 
-    
+    <!-- Espaço para Formularios --!>
+          <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+               <input type="radio" name="sel_telefone" value="0" checked /> Num Telefone 
+               <input type="radio" name="sel_telefone" value="1" /> Usu&aacuterio<br />
+               <input type="text" name="usuario" size=35 placeholder="Selecione tipo de pesquisa e insira texto "/><br />
+               
+               De:<input class="dateTxt" type="text" name="de" size="10" />
+               At&eacute:<input class="dateTxt" type="text" name="ate" size="10" />
+               
+               <input type="submit" value="  Pesquisar " />
+          </form>           
+
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    $name    = $_REQUEST['usuario'];
+                    $selecao = $_REQUEST['sel_telefone'];
+                    $de = $_REQUEST['de'];
+                    $ate = $_REQUEST['ate'];
+                    
+                    $consulta = "select c.*, o.descricao from conta_online c 
+                                 Left join operadora o on o.cod_operadora = c.cod_operadora  
+                                 Where c.data between '$de' and '$ate' and c.num_telefone not in (select num_telefone from telefone) 
+                                 and num_discado is not null and valor > 0 
+                                 and c.num_telefone = '61993335893'
+                                 ";
+                    
+                    if ($name == " "){
+                        echo "Sem critérios de pesquisa";
+                    }else{
+                        
+                        
+                        
+                    }
+                    
+                                     
+                }
+        ?>
+
 </body>
 
 </html>

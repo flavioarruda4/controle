@@ -11,6 +11,7 @@
 	               header('location:index.html');
         	    }
         $logado = ucfirst($_SESSION['login']);
+        
         switch ($_SESSION['privilegio']){
              case 1: 
                     $descPerfil = "Operação";
@@ -57,61 +58,17 @@
  
             <!-- Espaço para montar uma grade com dados a serem informados --!>
             <h2>Relatórios Gerenciais</h2>
-                <table border=1 width=700>
-                    <tr>
-                        <th>Operacional</th>
-                        <th>Gerencial</th>
-                        <th>Estratégico</th>
-                    </tr>
-                    <tr>
-                       <!-- Colocar privilegio usando session -->
-                       <!-- Relatórios Operacionais -->
-                        <?php
-                            switch ($privilegio){
-                                case 1:
-                                    // Relatórios Operacionais -->  
-                                    echo "<td>";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relTelefone.php');>Telefone Cadastrados</a><br />";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relNoticia.php');>Notícia</a>";
-                                    echo("</td>");
-                                    break;
-                                case 2:
-                                    // Relatórios Operacionais -->
-                                    echo "<td>";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relTelefone.php');>Telefone Cadastrados</a><br />";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relNoticia.php');>Notícia</a>";
-                                    echo("</td>");
-                                    // Relatórios Gerenciais -->
-                                    echo "<td>";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relOperadora.php');>Operadoras</a><br />";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relFuncionario.php');>Funcionários</a><br />";
-                                    echo "</td>";
-                                    break;
-                                case 3:
-                                    // Relatórios Operacionais -->
-                                    echo "<td>";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relTelefone.php');>Telefone Cadastrados</a><br />";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relNoticia.php');>Notícia</a>";
-                                    echo("</td>");
-                                    // Relatórios Gerenciais -->
-                                    echo "<td>";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relOperadora.php');>Operadoras</a><br />";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relFuncionario.php');>Funcionários</a><br />";
-                                    echo "</td>";
-                                    // Relatórios Estratégicos -->
-                                    echo "<td>";
-                                    echo "<a href=javascript:abrirRelatorio('../relatorio/relLigacoesNCorporativas.php');>
-                                           Utilização Mensal - Não corporativo</a><br />";
-                                    echo "Valores indevidos - Contestações<br />";
-                                    echo "Ligações não Corporativas<br />";
-                                    echo "<a href=javascript:abrir('../dm/impContaClaro.php');>Importação Conta Online</a>";  
-                                    echo "</td>";
-                                    break;                                    
-                                
+                 <!-- Relatórios Operacionais -->
+                 <?php
+                     $consRelatorio = "Select * from relatorio where privilegio <= $privilegio ";
+                     $resultado = mysql_query($consRelatorio) or die ("Falha na execucao da consulta");
+                     while ( $linha = mysql_fetch_assoc($resultado) ){
+                               $descricao  = utf8_encode($linha["descricao"]);
+                               $pagina       = $linha["pagina"];
+                               $informacao       = $linha["informacao"];
+    			              echo "<li><a href=javascript:abrir('../relatorio/$pagina')>$descricao</a></li>";                            
                             }
-                        ?> 
-                    </tr>
-                </table>
+                ?> 
         </div>
         <!-- Menu a apresentar e ultimas noticias sobre site --!>
         <div id="leftmenu"> 
@@ -124,7 +81,6 @@
                 <ul>
                     <li><a href="../principal.php">Página Inicial</a></li>
                        <?php
-                          $privilegio = $_SESSION['privilegio'];
                           $consulta = "Select descricao, pagina, informacao from categoria where privilegio <= $privilegio ";
                           $resultado = mysql_query($consulta) or die("Falha na execucao da consulta");
 	      		       	  while ($linha = mysql_fetch_assoc($resultado)) 
