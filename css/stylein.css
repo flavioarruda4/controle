@@ -1,0 +1,210 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+    background: #404347 url(images/bg.gif) repeat-x;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #f7f7f7;
+}
+
+a { color: #60C3DB; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+#wrap {
+    width: 980px;
+    margin: 0 auto;
+}
+
+#header {
+    margin: 40px 0 25px 0;
+}
+#header h2 {
+    font-size: 18px;
+    font-weight: 100;
+    letter-spacing: -1px;
+    text-align: center;
+}
+#header h1 {
+    font-size: 23px;
+    font-weight: 100;
+    letter-spacing: -2px;
+    text-align: center;
+}
+#header h1 a {
+    color: #FAFFB0;
+    text-decoration: none;
+}
+#header h1 a:hover {
+    color: #eee;
+    text-decoration: none;
+}
+#header h2 {
+    color: #999;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+#content {
+    float: right;
+    width: 700px;
+    padding: 0 20px 20px 20px;
+    border-left: 1px dotted #aaa;
+    text-align: justify;
+}
+#content h2 {
+    color: #B0FFBD;
+    font-size: 16px;
+    font-weight: 100;
+    text-align: center;
+    padding: 10px 0 5px 0;
+    border-bottom: 1px dotted #aaa;
+    margin-bottom: 10px;
+}
+#content h2 a {
+    color: #B0FFBD;
+    text-decoration: none;
+}
+#content h2 a:hover {
+    color: #eee;
+}
+
+#leftmenu {
+    float: left;
+    width: 200px;
+    padding: 0 20px 20px 0;
+}
+#leftmenu h2 {
+    border-bottom: 1px dotted #aaa;
+    padding: 10px 0 5px 0;
+    margin-bottom: 10px;
+    color: #B0FFBD;
+    font-size: 16px;
+    font-weight: 100;
+}
+#leftmenu ul {
+    list-style-type: none;
+    font-style: italic;
+    padding: 0 0 10px 0;
+}
+
+#footer {
+    margin-top: 20px;
+    border-top: 1px dotted #aaa;
+    font-size: 11px;
+    text-align: center;
+    padding: 10px 0 10px 0;
+}
+#footer a { 
+}
+#footer a:hover {
+}
+
+table{
+
+   font-size: 13px;
+   font-style: italic;
+   font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+table th{
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+#tabela {
+    width: 700px;
+    border: 1px;
+    border-style: solid ;
+    line-height: 35px;
+    border-radius: 7px;
+}
+#btnSubmit{
+  width: 200px;
+    color: black;
+	padding: 5px 10px;
+	float: center;
+	margin: 10px 0;
+	border: 1px solid #BEBEBE;
+	font-weight: lighter;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	background: #BEBEBE;
+	background: -moz-linear-gradient(top, #BEBEBE 0%, #BEBEBE 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#BEBEBE), color-stop(100%,#BEBEBE));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#22222', endColorstr='#11111',GradientType=0 );
+	-moz-box-shadow: 0px 1px 1px #BEBEBE, 0px 1px 0px rgba(255,255,255,.3) inset;
+	-webkit-box-shadow: 0px 1px 1px #BEBEBE, 0px 1px 0px rgba(255,255,255,.3) inset;
+	box-shadow: 0px 1px 1px #BEBEBE,0px 1px 0px rgba(255,255,255,.3) inset;
+	text-shadow: 0 1px 1px #BEBEBE;
+ }
+ #btnSubmit:hover{
+	position: relative;
+	top: 1px;
+	left: 1px;
+}
+.btnLogout{
+	width: 200px;
+    color: black;
+	padding: 5px 10px;
+	float: right;
+	margin: 20px 0;
+	border: 1px solid #BEBEBE;
+	font-weight: lighter;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	background: #BEBEBE;
+	background: -moz-linear-gradient(top, #BEBEBE 0%, #BEBEBE 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#BEBEBE), color-stop(100%,#BEBEBE));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#22222', endColorstr='#11111',GradientType=0 );
+	-moz-box-shadow: 0px 1px 1px #BEBEBE, 0px 1px 0px rgba(255,255,255,.3) inset;
+	-webkit-box-shadow: 0px 1px 1px #BEBEBE, 0px 1px 0px rgba(255,255,255,.3) inset;
+	box-shadow: 0px 1px 1px #BEBEBE,0px 1px 0px rgba(255,255,255,.3) inset;
+	text-shadow: 0 1px 1px #BEBEBE;
+}
+.btnLogout:hover{
+	position: relative;
+	top: 1px;
+	left: 1px;
+}
+
+#tabelapop{
+    border: 3px;   
+    border-style: solid; 
+    border-radius: 7px;
+    width: 600px;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+}
+#imgRodapePop{
+    position: absolute;
+    bottom: 100px;
+    left: 100px; 
+    height: 80px;
+    width: 650px;   
+}
+#tituloPop{
+    font-size:30px;
+    font-family: cursive;
+    text-align:center;
+}
+#logotipo{
+    position: absolute;
+    left: 70px;
+    top: 45px;
+    width: 300px;
+    height: 45px;
+    border-radius: 6px;
+}
+#mensa{
+	font-size: 20px;
+	color: red;
+	font-family: cursive;
+	text-align: center;
+	
+}

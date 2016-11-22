@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Supermaia Supermercados </title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script>
+		$(function(){
+		  var $form_inputs =   $('form input');
+		  var $rainbow_and_border = $('.rain, .border');
+		  /* Usado para fornecer looping animações em modo de fallback */
+		  $form_inputs.bind('focus', function(){
+		  	$rainbow_and_border.addClass('end').removeClass('unfocus start');
+		  });
+		  $form_inputs.bind('blur', function(){
+		  	$rainbow_and_border.addClass('unfocus start').removeClass('end');
+		  });
+		  $form_inputs.first().delay(800).queue(function() {
+			$(this).focus();
+		  });
+		});
+	</script>
+	<link href="css/login.css" rel="stylesheet">
+	</head>
+	<body id="home">
+		<div class="rain">
+			<div class="border start">
+				<form method="post" action="login.php">
+ 					<label>Email</label>
+					<input id="email"  name="email" type="text" placeholder="Email" required />
+					<label>Senha</label>
+					<input id="pass" name="pass" type="password" placeholder="Senha" required />
+                    <input id="entrar" name="entrar" type="submit" value=" ENTRAR "/>
+				</form>			
+			</div>
+		</div>
+	</body>
+</html>
