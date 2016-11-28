@@ -54,7 +54,17 @@
         <div id="content">
             <!-- Lista de contas importadas --!>
             <h2>Contas importadas</h2>
-            
+                     <?php
+                         $consRelatorio = "Select distinct mes,ano from conta_online";
+                         $resultado = mysql_query($consRelatorio) or die ("Falha na execucao da consulta");
+                         echo "<ul>";
+                         while ( $linha = mysql_fetch_assoc($resultado) ){
+                                   $mes  = $linha["mes"];
+                                   $ano  = $linha["ano"];
+        			               echo "<li> $mes / $ano </li>";
+                                }
+                         echo "</ul>"; 
+                    ?>            
  
             <!-- Espaço para montar uma grade com dados a serem informados --!>
             <h2>Relatórios Gerenciais</h2>
@@ -66,7 +76,7 @@
                                $descricao  = utf8_encode($linha["descricao"]);
                                $pagina       = $linha["pagina"];
                                $informacao       = $linha["informacao"];
-    			              echo "<li><a href=javascript:abrir('../relatorio/$pagina')>$descricao</a></li>";                            
+    			               echo "<li><a href=javascript:abrir('../relatorio/$pagina')>$descricao</a></li>";                            
                             }
                 ?> 
         </div>

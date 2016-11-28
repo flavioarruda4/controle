@@ -77,7 +77,7 @@
             }
         </script>
         
-<script src="jquery.maskMoney.js" type="text/javascript"></script>
+        <script src="jquery.maskMoney.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(function(){
                 $(".valores").maskMoney(
@@ -88,7 +88,27 @@
                      symbolStay: true}
                 );
             })
-        </script>              
+        </script>  
+        
+        <!-- -->
+        <script>
+            $(function descricaoMes($mes){
+                switch ($mes) {
+                    case 8:
+                        return "Agosto";
+                        break;
+                    case 9:
+                        return "Setembro";
+                        break;                        
+                }
+                
+                
+            })
+        
+        </script>
+        
+        </script>
+                    
             
             
                           

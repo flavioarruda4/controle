@@ -40,37 +40,160 @@
 
 <body>
     <h1 id="tituloPop">Controle de Telefonia</h1>
+        <h5 id="tituloPop">Liga&ccedil&otildees n&atildeo corporativas</h5>
     <!-- Espaço para Formularios --!>
+          <br />
           <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
-               <input type="radio" name="sel_telefone" value="0" checked /> Num Telefone 
-               <input type="radio" name="sel_telefone" value="1" /> Usu&aacuterio<br />
-               <input type="text" name="usuario" size=35 placeholder="Selecione tipo de pesquisa e insira texto "/><br />
-               
-               De:<input class="dateTxt" type="text" name="de" size="10" />
-               At&eacute:<input class="dateTxt" type="text" name="ate" size="10" />
-               
-               <input type="submit" value="  Pesquisar " />
+               <table id="tabelapop">
+                    <tr>
+                        <th colspan="2">Tipo de pesquisa</th>
+                    </tr>
+                    <tr>
+                        <td>Seleciona Linha:</td>
+                        <td>
+                            <select name="telefone"> 
+                               <?php
+                                  $consulta = "Select num_telefone , nome_usr from telefone order by nome_usr ";
+                                  $resultado = mysql_query($consulta) or die("Falha na execucao da consulta");
+        	      		       	  while ($linha = mysql_fetch_assoc($resultado)) 
+        			     	            { $telefone       = $linha["num_telefone"];
+                                          $nome_usr       = utf8_decode($linha["nome_usr"]);
+        					              echo "<option name=telefone value =$telefone >$telefone - $nome_usr</option>";
+                                        }
+                                ?>                                
+                            </select>                            
+                                         
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>M&ecircs:</td>
+                        <td>
+                            <select name="mes"> 
+                               <?php
+                                  $consulta = "Select distinct mes from conta_online";
+                                  $resultado = mysql_query($consulta) or die("Falha na execucao da consulta");
+        	      		       	  while ($linha = mysql_fetch_assoc($resultado)) 
+        			     	            { $mes       = $linha["mes"];
+                                          
+                                         // $mes_desc = descricaoMes($linha["mes"]);
+                                          switch ($mes) {
+                                               case 1:
+                                                    $desc_mes ="Janeiro";
+                                                    break;
+                                               case 2:
+                                                    $desc_mes ="Fevereiro";
+                                                    break;                                                        
+                                               case 3:
+                                                    $desc_mes ="Março";
+                                                    break;
+                                               case 4:
+                                                    $desc_mes ="Abril";
+                                                    break;
+                                               case 5:
+                                                    $desc_mes ="Maio";
+                                                    break;
+                                               case 6:
+                                                    $desc_mes ="Junho";
+                                                    break;
+                                               case 7:
+                                                    $desc_mes ="Julho";
+                                                    break;
+                                               case 8:
+                                                    $desc_mes ="Agosto";
+                                                    break;
+                                               case 9:
+                                                    $desc_mes ="Setembro";
+                                                    break;
+                                               case 10:
+                                                    $desc_mes ="Outubro";
+                                                    break;
+                                               case 11:
+                                                    $desc_mes ="Novembro";
+                                                    break;
+                                               case 12:
+                                                    $desc_mes ="Dezembro";
+                                                    break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                                          }  
+        					              echo "<option name=mes value=$mes>$desc_mes</option>";
+                                        }
+                                ?>                                
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ano:</td>
+                        <td>
+                            <select name="ano"> 
+                               <?php
+                                  $consulta = "Select distinct ano from conta_online";
+                                  $resultado = mysql_query($consulta) or die("Falha na execucao da consulta");
+        	      		       	  while ($linha = mysql_fetch_assoc($resultado)) 
+        			     	            { $ano       = $linha["ano"];
+        					              echo "<option name=ano value =$ano>$ano</option>";
+                                        }
+                                ?>                                
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><input type="submit" value="  Pesquisar " /></td>
+                    </tr>                                                  
+               </table>
           </form>           
 
         <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    $name    = $_REQUEST['usuario'];
-                    $selecao = $_REQUEST['sel_telefone'];
-                    $de = $_REQUEST['de'];
-                    $ate = $_REQUEST['ate'];
+                    $telefone    = $_REQUEST['telefone'];
+                    $mes = $_REQUEST['mes'];
+                    $ano = $_REQUEST['ano'];
                     
-                    $consulta = "select c.*, o.descricao from conta_online c 
-                                 Left join operadora o on o.cod_operadora = c.cod_operadora  
-                                 Where c.data between '$de' and '$ate' and c.num_telefone not in (select num_telefone from telefone) 
-                                 and num_discado is not null and valor > 0 
-                                 and c.num_telefone = '61993335893'
-                                 ";
-                    
-                    if ($name == " "){
-                        echo "Sem critérios de pesquisa";
+                    $consulta = "Select c.num_telefone, t.nome_usr, c.num_discado, c.secao,c.nome, c.data,c.valor, c.valor_cobrado, o.desc_operadora 
+                                 from conta_online c \n  
+                                 Left join operadora o on o.cod_operadora = c.cod_operadora \n
+                                 Left join telefone t on c.num_telefone = t.num_telefone";  
+                    if ($telefone == " "){
+                        echo "Campo Obrigatorio nao preenchido!";
                     }else{
-                        
-                        
+                      $consulta = $consulta." Where c.mes = $mes and c.ano = $ano and c.num_discado not in (select num_telefone from telefone) \n
+                                              and num_discado is not null and valor > 0 \n
+                                              and c.num_telefone = '$telefone' and o.cod_operadora = 2
+                                            "; 
+                      $resultado = mysql_query($consulta) or die("Falha na execucao da consulta");
+                     // echo $consulta;
+                      $i = 1;
+                      
+                      echo "<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />";
+                      echo "<table align ='center' width=700 border = 1>";
+                      echo "  <tr>";
+                      echo "     <th>Num Telefone</th>";
+                      echo "     <th>Usu&aacuterio</th>";
+                      echo "     <th>Num discado</th>";
+                      echo "     <th>Secao      </th>";
+                      echo "     <th>Data</th>";
+                      echo "     <th>Valor</th>";                      
+                      echo "     <th>Valor_cobrado</th>";
+                      while ($linha = mysql_fetch_assoc($resultado))
+                                  {
+                                   $num_telefone= $linha["num_telefone"];
+                                   $usuario= utf8_encode($linha["nome_usr"]);
+                                   $num_discado = $linha["num_discado"];
+                                   $secao = utf8_encode($linha["secao"]);
+                                   $nome = $linha["nome"];
+                                   $data = $linha["data"];
+                                   $valor    = $linha["valor"];
+                                   $valor_cobrado    = $linha["valor_cobrado"];
+                                   echo( "<tr>
+                                             <td align ='center'>$num_telefone</td>
+                                             <td align ='center'>$usuario</td>
+                                             <td align ='center'>$num_discado</td>
+                                             <td align ='center'>$secao</td>
+                                             <td>$data</td>
+                                             <td>$valor</td>
+                                             <td>$valor_cobrado</td>
+                                          </tr>");
+                                  $i++;
+                              }
+                     //                      
                         
                     }
                     

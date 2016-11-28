@@ -2,23 +2,39 @@
 <head>
     <?php  
         session_start();
-            if((!isset ($_SESSION['email']) == true) and (!isset ($_SESSION['senha']) == true))
+        include_once ("../dm/config.php");
+        include_once ("../dm/funcoes.php");
+        if((!isset ($_SESSION['email']) == true) and (!isset ($_SESSION['senha']) == true))
                 {
 	               unset($_SESSION['email']);
 	               unset($_SESSION['senha']);
-	               header('location:../index.html');
+	               header('location:index.html');
         	    }
-        $logado = $_SESSION['email'];
+        $logado = ucfirst($_SESSION['login']);
+        switch ($_SESSION['privilegio']){
+             case 1: 
+                    $descPerfil = "Operação";
+                    break;
+             case 2: 
+                    $descPerfil = "Gerencial";
+                    break;
+             case 3: 
+                    $descPerfil = "Estratégico";
+                    break;                                                                        
+        }
+        $logado     = ucfirst($_SESSION['login']);
+        $design     = $_SESSION['design'];
+        $privilegio = $_SESSION['privilegio']; 
     ?>
-    <?php 
-        include_once ("../dm/config.php"); 
-        include_once ("../dm/funcoes.php");
-    ?> 
+    <?php include ("../js/header.php");?>
     <title>Controle de Telefonia</title>
-    
-    <!-- Head padrão para página -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="../css/stylein.css " rel="stylesheet" type="text/css" />
+    <!-- Script para que seja exibido um calendário nos campos que estiverem setadas para que recebam class=dateTxt -->
+    <script>
+        $( function() {
+            $(function(){$('.dateTxt').datepicker({ dateFormat: 'yy-mm-dd' }); }); 
+        } );
+
+    </script>   
 </head>
 
 
@@ -49,7 +65,7 @@
                    $sms         = $linha["sms"];
                    $situacao    = $linha["situacao"];
                    echo( "<tr>
-                             <td align ='center'>61$num_telefone</td>
+                             <td align ='center'>$num_telefone</td>
                              <td>$nome_usr</td>
                              <td>$internet</td>
                              <td>$minutagem</td>

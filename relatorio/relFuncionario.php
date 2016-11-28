@@ -2,29 +2,32 @@
 <head>
     <?php  
         session_start();
-            if((!isset ($_SESSION['email']) == true) and (!isset ($_SESSION['senha']) == true))
+        include_once ("../dm/config.php");
+        include_once ("../dm/funcoes.php");
+        if((!isset ($_SESSION['email']) == true) and (!isset ($_SESSION['senha']) == true))
                 {
 	               unset($_SESSION['email']);
 	               unset($_SESSION['senha']);
-	               header('location:../index.html');
+	               header('location:index.html');
         	    }
-        $logado = $_SESSION['email'];
+        $logado = ucfirst($_SESSION['login']);
+        switch ($_SESSION['privilegio']){
+             case 1: 
+                    $descPerfil = "Operação";
+                    break;
+             case 2: 
+                    $descPerfil = "Gerencial";
+                    break;
+             case 3: 
+                    $descPerfil = "Estratégico";
+                    break;                                                                        
+        }
+        $logado     = ucfirst($_SESSION['login']);
+        $design     = $_SESSION['design'];
+        $privilegio = $_SESSION['privilegio']; 
     ?>
-    <?php 
-        include_once ("../dm/config.php"); 
-        include_once ("../dm/funcoes.php");
-    ?> 
+    <?php include ("../js/header.php");?>
     <title>Controle de Telefonia</title>
-    
-    <!-- Head padrão para página -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="../css/stylein.css " rel="stylesheet" type="text/css" />
-    
-    <!-- Funções atreladas ao Google para exibir Calendários no campo data deste formulario -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 </head>
 
 
@@ -64,7 +67,7 @@
                              <td>$cod_funcionario</td>
                              <td>$nome</td>
                              <td>$matricula</td>
-                             <td>61$telefone</td>
+                             <td>$telefone</td>
                              <td>$situacao</td>
                              <td>$privilegio</td>
                              <td>$email</td>
